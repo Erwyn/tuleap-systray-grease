@@ -3,9 +3,7 @@
 // @namespace   tuleap
 // @include     http://tuleap.net/*
 // @include     https://tuleap.net/*
-// @include     https://recco.cro.enalean.com/*
-// @include     http://recco.cro.enalean.com/*
-// @version     2
+// @version     3
 // @grant       none
 // ==/UserScript==
 function addCss(cssString) {
@@ -65,25 +63,53 @@ AZHU.storage = {
 }
 
 function display_systray(info) {
-    var systray               = document.createElement('div');
-    systray.className         = 'systray';
-
-    var systray_content       = document.createElement('div');
-    systray_content.className = 'systray_content';
-
-    var sprint = document.createElement('a');
-    sprint.href = info.href;
-    sprint.innerHTML = info.label;
-
-    var tuleap_icon = document.createElement('img');
-    tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
-    tuleap_icon.className = 'systray_icon';
+    var systray         = build_systray();
+    var systray_content = build_systray_content();
+    var sprint          = build_sprint(info);
+    var tuleap_icon     = build_tuleap_icon();
 
     systray_content.appendChild(sprint);
     systray_content.appendChild(tuleap_icon);
     systray.appendChild(systray_content);
 
     document.body.appendChild(systray);
+}
+
+function build_systray_content() {
+    var systray_content       = document.createElement('div');
+    systray_content.className = 'systray_content';
+
+    return systray_content;
+}
+
+function build_systray() {
+    var systray               = document.createElement('div');
+    systray.className         = 'systray';
+
+    return systray;
+}
+
+function build_sprint(info) {
+    var sprint = document.createElement('a');
+    sprint.href = info.href;
+    sprint.innerHTML = info.label;
+
+    return sprint;
+}
+
+function build_tuleap_icon() {
+    var tuleap_icon = document.createElement('img');
+    tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
+    tuleap_icon.className = 'systray_icon';
+
+    tuleap_icon.addEventListener('click', hide_systray, false)
+
+    return tuleap_icon;
+}
+
+function hide_systray() {
+    var systray = document.getElementsByClassName('systray').item(0);
+    systray.parentNode.removeChild(systray);
 }
 
 var agile_dashboard_link = $('navigation').down('a[href^="/plugins/agiledashboard/?group_id="]')
