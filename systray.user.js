@@ -7,7 +7,6 @@
 // @include     http://recco.cro.enalean.com/*
 // @version     2
 // @grant       none
-// @require     http://tuleap.net/scripts/prototype/prototype.js
 // ==/UserScript==
 function addCss(cssString) {
   var head = document.getElementsByTagName('head')[0];
@@ -63,14 +62,23 @@ AZHU.storage = {
 }
 
 function display_systray(info) {
-    var systray         = new Element('div').addClassName('systray');
-    var systray_content = new Element('div').addClassName('systray_content');
-    var sprint          = new Element('a', {href: info.href}).update(info.label);
-    var tuleap_icon     = new Element('img', {src: "/themes/Tuleap/images/favicon.ico"});
+    var systray               = document.createElement('div');
+    systray.className         = 'systray';
+
+    var systray_content       = document.createElement('div');
+    systray_content.className = 'systray_content';
+
+    var sprint = document.createElement('a');
+    sprint.href = info.href;
+    sprint.innerHTML = info.label;
+
+    var tuleap_icon = document.createElement('img');
+    tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
 
     systray_content.appendChild(sprint);
     systray_content.appendChild(tuleap_icon);
     systray.appendChild(systray_content);
+
     document.body.appendChild(systray);
 }
 
