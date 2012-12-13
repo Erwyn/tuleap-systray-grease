@@ -63,14 +63,15 @@ AZHU.storage = {
 }
 
 function display_systray(info) {
-  var systray = new Element('div').addClassName('systray').update(
-    new Element('div').addClassName('systray_content').update(
-      new Element('a', {
-	href: info.href
-      }).update(info.label)
-    )
-  )
-  document.body.appendChild(systray)
+    var systray         = new Element('div').addClassName('systray');
+    var systray_content = new Element('div').addClassName('systray_content');
+    var sprint          = new Element('a', {href: info.href}).update(info.label);
+    var tuleap_icon     = new Element('img', {src: "/themes/Tuleap/images/favicon.ico"});
+
+    systray_content.appendChild(sprint);
+    systray_content.appendChild(tuleap_icon);
+    systray.appendChild(systray_content);
+    document.body.appendChild(systray);
 }
 
 var agile_dashboard_link = $('navigation').down('a[href^="/plugins/agiledashboard/?group_id="]')
