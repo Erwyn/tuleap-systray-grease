@@ -37,6 +37,9 @@ addCss (' \
 .systray_content a:visited { \
   color: #999999; \
 } \
+.systray_icon {\
+    float: left;\
+}\
 .systray_content a:hover { \
   color: white; \
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); \
@@ -74,6 +77,7 @@ function display_systray(info) {
 
     var tuleap_icon = document.createElement('img');
     tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
+    tuleap_icon.className = 'systray_icon';
 
     systray_content.appendChild(sprint);
     systray_content.appendChild(tuleap_icon);
