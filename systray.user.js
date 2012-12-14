@@ -5,6 +5,7 @@
 // @include     https://tuleap.net/*
 // @version     3
 // @grant       none
+// @require     http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js 
 // ==/UserScript==
 function addCss(cssString) {
   var head = document.getElementsByTagName('head')[0];
