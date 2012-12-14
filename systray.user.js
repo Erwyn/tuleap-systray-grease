@@ -33,7 +33,7 @@ addCss (' \
     padding: 0.5em 1em; \
     box-shadow: 0 0 5px #888; \
     text-align: right; \
-} \\n\
+} \
 .overlay {\
    background-color: #000;\
    opacity: .7;\
@@ -44,7 +44,7 @@ addCss (' \
 }\
 .cardwall_icon {\
     margin: 0 5px;\
-    vertical-align: middle;\\n\
+    vertical-align: middle;\
 }\
 .systray_content a:link, \
 .systray_content a:visited { \
@@ -52,8 +52,8 @@ addCss (' \
 } \
 .systray_icon {\
     float: left;\
-}\\n\
-.systray_info {\n\
+}\
+.systray_info {\
 }\
 .systray_content a:hover { \
   color: white; \
@@ -167,8 +167,15 @@ init();
     set_overlay = function() {
         var overlay = $(document.createElement('div'));
         overlay.addClass('overlay');
+        overlay.bind('click', remove_overlay);
 
         $('body').append(overlay);
+    };
+
+    remove_overlay = function() {
+        var overlay = $('.overlay');
+        overlay.unbind('click', remove_overlay);
+        overlay.detach();
     };
 
     hide_systray = function() {
