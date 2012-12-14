@@ -8,6 +8,7 @@
 // @require     http://tuleap.net/scripts/prototype/prototype.js
 // @require     http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js
 // ==/UserScript==
+jQuery.noConflict();
 function addCss(cssString) {
   var head = document.getElementsByTagName('head')[0];
   var newCss = document.createElement('style');
@@ -64,55 +65,66 @@ AZHU.storage = {
   }
 }
 
-function display_systray(info) {
-    var systray         = build_systray();
-    var systray_content = build_systray_content();
-    var sprint          = build_sprint(info);
-    var tuleap_icon     = build_tuleap_icon();
-
-    systray_content.appendChild(sprint);
-    systray_content.appendChild(tuleap_icon);
-    systray.appendChild(systray_content);
-
-    document.body.appendChild(systray);
+// This function doesn't do anything
+// but fixing a weird bug with
+// initialization.
+function init(){
+  //nothing
 }
 
-function build_systray_content() {
-    var systray_content       = document.createElement('div');
-    systray_content.className = 'systray_content';
+init();
 
-    return systray_content;
-}
+(function($) {
+    display_systray = function(info) {
+        var systray         = build_systray();
+        var systray_content = build_systray_content();
+        var sprint          = build_sprint(info);
+        var tuleap_icon     = build_tuleap_icon();
 
-function build_systray() {
-    var systray               = document.createElement('div');
-    systray.className         = 'systray';
+        systray_content.appendChild(sprint);
+        systray_content.appendChild(tuleap_icon);
+        systray.appendChild(systray_content);
 
-    return systray;
-}
+        document.body.appendChild(systray);
+    };
 
-function build_sprint(info) {
-    var sprint = document.createElement('a');
-    sprint.href = info.href;
-    sprint.innerHTML = info.label;
+    build_systray_content = function() {
+        var systray_content       = document.createElement('div');
+        systray_content.className = 'systray_content';
 
-    return sprint;
-}
+        return systray_content;
+    };
 
-function build_tuleap_icon() {
-    var tuleap_icon = document.createElement('img');
-    tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
-    tuleap_icon.className = 'systray_icon';
+    build_systray = function() {
+        var systray               = document.createElement('div');
+        systray.className         = 'systray';
 
-    tuleap_icon.addEventListener('click', hide_systray, false)
+        return systray;
+    };
 
-    return tuleap_icon;
-}
+    build_sprint = function(info) {
+        var sprint = document.createElement('a');
+        sprint.href = info.href;
+        sprint.innerHTML = info.label;
 
-function hide_systray() {
-    var systray = document.getElementsByClassName('systray').item(0);
-    systray.parentNode.removeChild(systray);
-}
+        return sprint;
+    };
+
+    build_tuleap_icon = function() {
+        var tuleap_icon = document.createElement('img');
+        tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
+        tuleap_icon.className = 'systray_icon';
+
+        tuleap_icon.addEventListener('click', hide_systray, false)
+
+        return tuleap_icon;
+    };
+
+    hide_systray = function() {
+        var systray = document.getElementsByClassName('systray').item(0);
+        systray.parentNode.removeChild(systray);
+    };
+})(jQuery);
 
 var agile_dashboard_link = $('navigation').down('a[href^="/plugins/agiledashboard/?group_id="]')
   , href
