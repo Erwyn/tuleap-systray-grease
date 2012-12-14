@@ -95,6 +95,7 @@ init();
 
         systray.append(systray_content);
 
+        $('body').css('padding','0 0 3em 0');
         $('body').append(systray);
     };
 
@@ -180,6 +181,8 @@ init();
 
         var systray_content = $('.systray_content');
         systray_content.css('display','inline-block');
+
+        $('body').css('padding','0');
     };
 
     show_systray = function() {
@@ -192,6 +195,8 @@ init();
 
         var systray_content = $('.systray_content');
         systray_content.css('display','');
+
+        $('body').css('padding','0 0 3em 0');
     };
 })(jQuery);
 
