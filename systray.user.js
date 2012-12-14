@@ -121,8 +121,27 @@ init();
     };
 
     hide_systray = function() {
-        var systray = $('.systray');
-        systray.detach();
+        var tuleap_icon = $('.systray_icon');
+        tuleap_icon.unbind('click', hide_systray);
+        tuleap_icon.bind('click', show_systray);
+
+        var sprint = $('.systray a');
+        sprint.hide();
+
+        var systray_content = $('.systray_content');
+        systray_content.css('display','inline-block');
+    };
+
+    show_systray = function() {
+        var tuleap_icon = $('.systray_icon');
+        tuleap_icon.unbind('click', show_systray);
+        tuleap_icon.bind('click', hide_systray);
+
+        var sprint = $('.systray a');
+        sprint.show();
+
+        var systray_content = $('.systray_content');
+        systray_content.css('display','');
     };
 })(jQuery);
 
