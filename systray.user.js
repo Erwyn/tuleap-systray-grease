@@ -31,15 +31,29 @@ addCss (' \
     color: #999999; \
     borderBottom: none; \
     padding: 0.5em 1em; \
-    text-align: right; \
     box-shadow: 0 0 5px #888; \
-} \
+    text-align: right; \
+} \\n\
+.overlay {\
+   background-color: #000;\
+   opacity: .7;\
+   filter: alpha(opacity=70);\
+   position: fixed; top: 0; left: 0;\
+   width: 100%; height: 100%;\
+   z-index: 100;\
+}\
+.cardwall_icon {\
+    margin: 0 5px;\
+    vertical-align: middle;\\n\
+}\
 .systray_content a:link, \
 .systray_content a:visited { \
   color: #999999; \
 } \
 .systray_icon {\
     float: left;\
+}\\n\
+.systray_info {\n\
 }\
 .systray_content a:hover { \
   color: white; \
@@ -77,22 +91,37 @@ init();
 (function($) {
     display_systray = function(info) {
         var systray         = build_systray();
-        var systray_content = build_systray_content();
-        var sprint          = build_sprint(info);
-        var tuleap_icon     = build_tuleap_icon();
+        var systray_content = build_systray_content(info);
 
-        systray_content.append(sprint);
-        systray_content.append(tuleap_icon);
         systray.append(systray_content);
 
         $('body').append(systray);
     };
 
-    build_systray_content = function() {
+    build_systray_content = function(info) {
         var systray_content       = $(document.createElement('div'));
         systray_content.addClass('systray_content');
 
+        var tuleap_icon     = build_tuleap_icon();
+        var systray_info    = build_systray_info(info);
+
+        systray_content.append(tuleap_icon);
+        systray_content.append(systray_info);
+
         return systray_content;
+    };
+
+    build_systray_info = function(info) {
+        var sprint          = build_sprint(info);
+        var cardwall_icon   = build_cardwall_icon();
+
+        var systray_info    = $(document.createElement('div'));
+        systray_info.addClass('systray_info');
+
+        systray_info.append(cardwall_icon);
+        systray_info.append(sprint);
+
+        return systray_info
     };
 
     build_systray = function() {
@@ -120,13 +149,34 @@ init();
         return tuleap_icon;
     };
 
+    build_cardwall_icon = function() {
+        var cardwall_icon = $(document.createElement('img'));
+        cardwall_icon.addClass('cardwall_icon');
+        cardwall_icon.attr('src','http://p.yusukekamiyamane.com/icons/search/fugue/icons/cards-stack.png');
+
+        cardwall_icon.bind('click', show_cardwall);
+
+        return cardwall_icon;
+    };
+
+    show_cardwall = function() {
+        set_overlay();
+    };
+
+    set_overlay = function() {
+        var overlay = $(document.createElement('div'));
+        overlay.addClass('overlay');
+
+        $('body').append(overlay);
+    };
+
     hide_systray = function() {
         var tuleap_icon = $('.systray_icon');
         tuleap_icon.unbind('click', hide_systray);
         tuleap_icon.bind('click', show_systray);
 
-        var sprint = $('.systray a');
-        sprint.hide();
+        var systray_info = $('.systray_info');
+        systray_info.hide();
 
         var systray_content = $('.systray_content');
         systray_content.css('display','inline-block');
@@ -137,8 +187,8 @@ init();
         tuleap_icon.unbind('click', show_systray);
         tuleap_icon.bind('click', hide_systray);
 
-        var sprint = $('.systray a');
-        sprint.show();
+        var systray_info = $('.systray_info');
+        systray_info.show();
 
         var systray_content = $('.systray_content');
         systray_content.css('display','');
