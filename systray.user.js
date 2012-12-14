@@ -23,7 +23,7 @@ addCss (' \
     width: 100%; \
 } \
 .systray_content { \
-    margin: 0 1em; \
+    margin: 0 5em; \
     border-top-left-radius: 4px; \
     border-top-right-radius: 4px; \
     background: #2D323A; \
