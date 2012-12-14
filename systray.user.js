@@ -43,7 +43,7 @@ addCss (' \
    z-index: 100;\
 }\
 .cardwall_icon {\
-    margin: 0 5px;\
+    margin: 0 10px;\
     vertical-align: middle;\
 }\
 .systray_content a:link, \
@@ -83,7 +83,7 @@ AZHU.storage = {
 // but fixing a weird bug with
 // initialization.
 function init(){
-  //nothing
+  localStorage.clear();
 }
 
 init();
@@ -97,6 +97,8 @@ init();
 
         $('body').css('padding','0 0 3em 0');
         $('body').append(systray);
+        console.log(info);
+        console.log(info.cardwall);
     };
 
     build_systray_content = function(info) {
@@ -162,6 +164,10 @@ init();
 
     show_cardwall = function() {
         set_overlay();
+//        var cardwall = $(document.createElement('div'));
+//        cardwall.html();
+
+        
     };
 
     set_overlay = function() {
@@ -221,9 +227,10 @@ if (agile_dashboard_link) {
         var div = new Element('div').update(transport.responseText)
           , current_sprint = div.down('.ad_index_planning:last > ul > li:first')
         if (current_sprint) {
-          var label = current_sprint.textContent.trim()
-            , a     = current_sprint.down('.ad_index_planning_icons > a:last')
-	    , info  = {label: label, href: a.href}
+          var label         = current_sprint.textContent.trim()
+            , a             = current_sprint.down('.ad_index_planning_icons > a:last')
+            , cardwall_elem = jQuery('.cardwall_board table')[0].outerHTML
+	    , info          = {label: label, href: a.href, cardwall: cardwall_elem}
 	  AZHU.storage.save('systray_' + href, info, cache_duration)
 	  display_systray(info)
 	}
