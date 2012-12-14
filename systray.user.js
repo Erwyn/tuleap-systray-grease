@@ -81,48 +81,48 @@ init();
         var sprint          = build_sprint(info);
         var tuleap_icon     = build_tuleap_icon();
 
-        systray_content.appendChild(sprint);
-        systray_content.appendChild(tuleap_icon);
-        systray.appendChild(systray_content);
+        systray_content.append(sprint);
+        systray_content.append(tuleap_icon);
+        systray.append(systray_content);
 
-        document.body.appendChild(systray);
+        $('body').append(systray);
     };
 
     build_systray_content = function() {
-        var systray_content       = document.createElement('div');
-        systray_content.className = 'systray_content';
+        var systray_content       = $(document.createElement('div'));
+        systray_content.addClass('systray_content');
 
         return systray_content;
     };
 
     build_systray = function() {
-        var systray               = document.createElement('div');
-        systray.className         = 'systray';
+        var systray               = $(document.createElement('div'));
+        systray.addClass('systray');
 
         return systray;
     };
 
     build_sprint = function(info) {
-        var sprint = document.createElement('a');
-        sprint.href = info.href;
-        sprint.innerHTML = info.label;
+        var sprint = $(document.createElement('a'));
+        sprint.attr('href',info.href);
+        sprint.html(info.label);
 
         return sprint;
     };
 
     build_tuleap_icon = function() {
-        var tuleap_icon = document.createElement('img');
-        tuleap_icon.src = "/themes/Tuleap/images/favicon.ico";
-        tuleap_icon.className = 'systray_icon';
+        var tuleap_icon = $(document.createElement('img'));
+        tuleap_icon.addClass('systray_icon');
+        tuleap_icon.attr('src','/themes/Tuleap/images/favicon.ico');
 
-        tuleap_icon.addEventListener('click', hide_systray, false)
+        tuleap_icon.bind('click',hide_systray);
 
         return tuleap_icon;
     };
 
     hide_systray = function() {
-        var systray = document.getElementsByClassName('systray').item(0);
-        systray.parentNode.removeChild(systray);
+        var systray = $('.systray');
+        systray.detach();
     };
 })(jQuery);
 
