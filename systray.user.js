@@ -3,7 +3,7 @@
 // @namespace   tuleap
 // @include     http://tuleap.net/*
 // @include     https://tuleap.net/*
-// @version     3
+// @version     4
 // @grant       none
 // @require     http://tuleap.net/scripts/prototype/prototype.js
 // @require     http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js
@@ -83,7 +83,7 @@ AZHU.storage = {
 // but fixing a weird bug with
 // initialization.
 function init(){
-  localStorage.clear();
+  // nothing
 }
 
 init();
