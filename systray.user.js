@@ -3,7 +3,7 @@
 // @namespace   tuleap
 // @include     http://tuleap.net/*
 // @include     https://tuleap.net/*
-// @version     4
+// @version     4.0.1
 // @grant       none
 // @require     http://tuleap.net/scripts/prototype/prototype.js
 // @require     http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js
@@ -229,7 +229,7 @@ if (agile_dashboard_link) {
         if (current_sprint) {
           var label         = current_sprint.textContent.trim()
             , a             = current_sprint.down('.ad_index_planning_icons > a:last')
-            , cardwall_elem = jQuery('.cardwall_board table')[0].outerHTML
+            , cardwall_elem = jQuery('.cardwall_board table', div)[0].outerHTML
 	    , info          = {label: label, href: a.href, cardwall: cardwall_elem}
 	  AZHU.storage.save('systray_' + href, info, cache_duration)
 	  display_systray(info)
