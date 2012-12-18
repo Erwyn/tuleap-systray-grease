@@ -3,7 +3,7 @@
 // @namespace   tuleap
 // @include     http://tuleap.net/*
 // @include     https://tuleap.net/*
-// @version     4.0.1
+// @version     4.1.0
 // @grant       none
 // @require     http://tuleap.net/scripts/prototype/prototype.js
 // @require     http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js
@@ -61,6 +61,9 @@ addCss (' \
   text-decoration: none; \
 }'); 
 
+const SHOW = 'open';
+const HIDE = 'hide';
+
 var cache_duration = 2 * 3600; // Two hours
 
 // http://blog.anhangzhu.com/2011/07/20/html-5-local-storage-with-expiration/
@@ -97,8 +100,29 @@ init();
 
         $('body').css('padding','0 0 3em 0');
         $('body').append(systray);
-        console.log(info);
-        console.log(info.cardwall);
+
+        check_user_preferences();
+    };
+
+    check_user_preferences = function() {
+        var preferences = AZHU.storage.load('pref');
+
+        if(preferences) {
+            apply_user_preferences(preferences);
+        } else {
+            AZHU.storage.save('pref', SHOW, cache_duration);
+        }
+    };
+
+    apply_user_preferences = function(pref) {
+        if (pref === SHOW) {
+            show_systray();
+        }
+
+        if (pref === HIDE) {
+            hide_systray();
+        }
+
     };
 
     build_systray_content = function(info) {
@@ -185,6 +209,8 @@ init();
     };
 
     hide_systray = function() {
+        AZHU.storage.save('pref', HIDE, cache_duration);
+
         var tuleap_icon = $('.systray_icon');
         tuleap_icon.unbind('click', hide_systray);
         tuleap_icon.bind('click', show_systray);
@@ -199,6 +225,8 @@ init();
     };
 
     show_systray = function() {
+        AZHU.storage.save('pref', SHOW, cache_duration);
+
         var tuleap_icon = $('.systray_icon');
         tuleap_icon.unbind('click', show_systray);
         tuleap_icon.bind('click', hide_systray);
